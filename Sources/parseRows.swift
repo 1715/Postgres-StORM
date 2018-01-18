@@ -60,7 +60,7 @@ extension PostgresStORM {
 				case "date":
 					let output = result.getFieldString(tupleIndex: x, fieldIndex: f)
 					let formatter = DateFormatter()
-					formatter.dateFormat = "yyyy/MM/dd hh:mm Z"
+					formatter.dateFormat = "yyyy-MM-dd"
 					params[result.fieldName(index: f)!] = formatter.date(from: output!)
 
 					// time
