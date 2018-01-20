@@ -34,6 +34,8 @@ public struct PostgresConnector {
 /// Provides PosgreSQL-specific ORM functionality to child classes
 open class PostgresStORM: StORM, StORMProtocol {
 
+    public var isNewObject : Bool = false
+
 	/// Table that the child object relates to in the database.
 	/// Defined as "open" as it is meant to be overridden by the child class.
 	open func table() -> String {
@@ -176,7 +178,7 @@ open class PostgresStORM: StORM, StORMProtocol {
 
 	open func save(set: (_ id: Any)->Void) throws {
 		do {
-			if keyIsEmpty() {
+			if keyIsEmpty() || self.isNewObject {
 				let setId = try insert(asData(1))
 				set(setId)
 			} else {
