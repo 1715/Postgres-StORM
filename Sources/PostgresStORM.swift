@@ -158,8 +158,9 @@ open class PostgresStORM: StORM, StORMProtocol {
 
 	open func save() throws {
 		do {
-			if keyIsEmpty() {
-				try insert(asData(1))
+			if keyIsEmpty() || self.isNewObject {
+				let offset = self.isNewObject ? 0 : 1
+                try insert(asData(offset))
 			} else {
 				let (idname, idval) = firstAsKey()
 				try update(data: asData(1), idName: idname, idValue: idval)
@@ -179,8 +180,9 @@ open class PostgresStORM: StORM, StORMProtocol {
 	open func save(set: (_ id: Any)->Void) throws {
 		do {
 			if keyIsEmpty() || self.isNewObject {
-				let setId = try insert(asData(1))
-				set(setId)
+				let offset = self.isNewObject ? 0 : 1
+                let setId = try insert(asData(offset))
+                set(setId)
 			} else {
 				let (idname, idval) = firstAsKey()
 				try update(data: asData(1), idName: idname, idValue: idval)
