@@ -55,7 +55,7 @@ open class PostgresStORM: StORM, StORMProtocol {
 	// Internal function which executes statements, with parameter binding
 	// Returns raw result
 	@discardableResult
-	func exec(_ statement: String, params: [String]) throws -> PGResult {
+	open func exec(_ statement: String, params: [String]) throws -> PGResult {
 		let thisConnection = PostgresConnect(
 			host:		PostgresConnector.host,
 			username:	PostgresConnector.username,
@@ -88,7 +88,7 @@ open class PostgresStORM: StORM, StORMProtocol {
 	// Internal function which executes statements, with parameter binding
 	// Returns a processed row set
 	@discardableResult
-	func execRows(_ statement: String, params: [String]) throws -> [StORMRow] {
+	open func execRows(_ statement: String, params: [String]) throws -> [StORMRow] {
 		let thisConnection = PostgresConnect(
 			host:		PostgresConnector.host,
 			username:	PostgresConnector.username,
